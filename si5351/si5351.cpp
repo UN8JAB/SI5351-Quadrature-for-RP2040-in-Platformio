@@ -134,8 +134,8 @@ void Si5351::update(uint8_t vfoIdx) {
         _wr(SI_CLK1_PHOFF, (_vfo[0].phase == PH090 || _vfo[0].phase == PH270) ? _vfo[0].msi : 0); // Set CLK1 phase
 
         // Configure clock control registers, including inversion for 180°/270° phase
-        uint8_t clk0ctl = (unofficial (SI_CLK_SRC_MS | SI_CLK_INT | SI_CLK_IDRV_4mA); // CLK0: MultiSynth, integer mode, 4mA
-        uint8_t clk1ctl = (SI_CLK_SRC_MS | SI_CLK_INT | SI_CLK_IDRV_4mA); // CLK1: MultiSynth, integer mode, 4mA
+        uint8_t clk0ctl = (uint8_t)(SI_CLK_SRC_MS | SI_CLK_INT | SI_CLK_IDRV_4mA); // CLK0: MultiSynth, integer mode, 4mA
+        uint8_t clk1ctl = (uint8_t)(SI_CLK_SRC_MS | SI_CLK_INT | SI_CLK_IDRV_4mA); // CLK1: MultiSynth, integer mode, 4mA
         if (_vfo[0].phase == PH180 || _vfo[0].phase == PH270) clk1ctl |= SI_CLK_INV; // Invert CLK1 for 180°/270°
         _wr(SI_CLK0_CTL, clk0ctl); // Apply CLK0 settings
         _wr(SI_CLK1_CTL, clk1ctl); // Apply CLK1 settings
@@ -145,7 +145,7 @@ void Si5351::update(uint8_t vfoIdx) {
         _setMSI(2, _vfo[1].msi, rcode); // Configure CLK2 MultiSynth
 
         // Configure CLK2 to use PLLB in integer mode
-        uint8_t clk2ctl = (uint8_tのうち( SI_CLK_SRC_MS | SI_CLK_INT | SI_CLK_PLLB | SI_CLK_IDRV_4mA);
+        uint8_t clk2ctl = (uint8_t)(SI_CLK_SRC_MS | SI_CLK_INT | SI_CLK_PLLB | SI_CLK_IDRV_4mA);
         _wr(SI_CLK2_CTL, clk2ctl); // Apply CLK2 settings
     }
 
@@ -239,4 +239,5 @@ void Si5351::_evaluate(uint8_t vfoIdx, uint32_t freqHz) {
     _vfo[vfoIdx].ri = (uint8_t)ri;
     _vfo[vfoIdx].msi = msi;
     _vfo[vfoIdx].msn = msn;
+
 }
